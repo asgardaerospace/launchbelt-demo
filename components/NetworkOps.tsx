@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
 import { 
   Network, Grid3X3, ShieldCheck, TrendingUp, Filter, 
@@ -78,14 +77,35 @@ const computeRisk = (f: Facility): 'LOW' | 'MED' | 'HIGH' => {
 
 // --- COMPONENTS ---
 
-const NetworkOps: React.FC<{ role: Role }> = ({ role }) => {
-  const [activeTab, setActiveTab] = useState('Network Map');
-  const [selectedFacilityId, setSelectedFacilityId] = useState<string | null>(null);
+type NetworkOpsProps = {
+  role: Role
+  initialTab?: string
+  initialView?: string
+  initialFacilityId?: string
+  highlightId?: string
+};
+
+const NetworkOps: React.FC<NetworkOpsProps> = ({
+  role,
+  initialTab,
+  initialView,
+  initialFacilityId,
+  highlightId,
+}) => {
+  const [activeTab, setActiveTab] = useState(initialTab ?? 'Network Map');
+  const [selectedFacilityId, setSelectedFacilityId] = useState<string | null>(initialFacilityId ?? null);
   const [showFlows, setShowFlows] = useState(true);
   const [showReadiness, setShowReadiness] = useState(true);
   const [showRisk, setShowRisk] = useState(false);
   const [filterProcess, setFilterProcess] = useState<string | null>(null);
   const [drilldownActive, setDrilldownActive] = useState(false);
+
+  // Keeping these props accepted for typing and future deep-link support.
+  // Wiring can be added later without changing App.tsx.
+  useEffect(() => {
+    void initialView;
+    void highlightId;
+  }, [initialView, highlightId]);
 
   const selectedFacility = useMemo(() => 
     SEEDED_FACILITIES.find(f => f.id === selectedFacilityId) || null
