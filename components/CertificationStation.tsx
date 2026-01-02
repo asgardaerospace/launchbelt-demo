@@ -1,9 +1,8 @@
-
 import React, { useState } from 'react';
 import { 
-  ShieldCheck, CheckCircle2, XCircle, Camera, 
-  Activity, ChevronRight, AlertTriangle, Target,
-  Image as ImageIcon, Info
+  ShieldCheck, CheckCircle2, XCircle as XCircleIcon,
+  Activity, ChevronRight, AlertTriangle,
+  Info
 } from 'lucide-react';
 import { logAction } from '../services/auditService';
 import HelpModal from './HelpModal';
@@ -74,14 +73,24 @@ const CertificationStation: React.FC<CertificationStationProps> = ({ job, onComp
     const isLast = currentStepIdx === steps.length - 1;
     
     if (results[currentStepIdx] === false) {
-      await logAction('QC-AUTO', 'NCR_CREATED', job?.wo || 'WO-8804', `Automatic NCR triggered by failed inspection step: ${steps[currentStepIdx].title}`);
+      await logAction(
+        'QC-AUTO',
+        'NCR_CREATED',
+        job?.wo || 'WO-8804',
+        `Automatic NCR triggered by failed inspection step: ${steps[currentStepIdx].title}`
+      );
       onFlagIssue();
       return;
     }
 
     if (isLast) {
       setIsFinishing(true);
-      await logAction('QC-USER-09', 'CERTIFICATION_COMPLETED', job?.wo || 'WO-8804', `Job released to Next Node.`);
+      await logAction(
+        'QC-USER-09',
+        'CERTIFICATION_COMPLETED',
+        job?.wo || 'WO-8804',
+        `Job released to Next Node.`
+      );
       setTimeout(() => onComplete({
         wo: job?.wo,
         part: job?.part,
@@ -146,7 +155,7 @@ const CertificationStation: React.FC<CertificationStationProps> = ({ job, onComp
                  results[currentStepIdx] === false ? 'bg-red-600 border-red-400 text-white' : 'bg-slate-900 border-slate-800 text-slate-700'
                } ${!allChecksDone ? 'opacity-20' : ''}`}
              >
-                <XCircle className="w-4 h-4" /> Fail
+                <XCircleIcon className="w-4 h-4" /> Fail
              </button>
           </div>
         </div>
@@ -233,7 +242,7 @@ const CertificationStation: React.FC<CertificationStationProps> = ({ job, onComp
   );
 };
 
-const XCircle = ({ className }: { className?: string }) => (
+const XCircleLocal = ({ className }: { className?: string }) => (
   <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
 );
 
