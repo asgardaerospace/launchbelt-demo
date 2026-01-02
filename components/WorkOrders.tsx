@@ -231,7 +231,7 @@ const WorkOrderDetail: React.FC<{ order: any, onBack: () => void, onNavigate: an
             key={tab.name}
             onClick={() => setActiveTab(tab.name)}
             className={`flex items-center gap-2 px-8 py-5 text-[10px] font-black uppercase tracking-[0.2em] transition-all border-b-2 whitespace-nowrap italic ${
-              activeTab === tab 
+              activeTab === tab.name.name
               ? 'text-primary border-primary bg-primary/5' 
               : 'text-slate-600 border-transparent hover:text-slate-300'
             }`}
