@@ -1,0 +1,23 @@
+
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          DEFAULT: 'var(--primary-color, #3b82f6)',
+          dark: 'var(--primary-dark, #2563eb)',
+          glow: 'var(--primary-glow, rgba(59, 130, 246, 0.15))',
+        }
+      }
+    }
+  },
+  plugins: [],
+};
+export default config;
